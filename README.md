@@ -1,7 +1,25 @@
 # aetna-movie
 
 ## Candidate Notes
+I created an API on top of the two SQLite3 databases and all the user stories below are completed. I used Javascript for the language,
+Express.js for the web framework, OpenAPI 3.0 (.yaml) for the contract, along with Jest for testing.
 
+
+## Install & Execute
+Install Packages
+```
+npm i
+```
+
+Run Tests
+```
+npm test
+```
+
+Start Server
+```
+npm start
+```
 
 
 ## Task
