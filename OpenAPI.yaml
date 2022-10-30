@@ -1,0 +1,243 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Open-API Movie Database
+  description: An API that allows users to get movie database details.
+  contact:
+    name: Jesse Jackman
+    email: jackmanjesse2@gmail.com
+servers:
+  - url: /
+    description: All localhost endpoints.
+paths:
+  /allmovies:
+    get:
+      description: Gets all movie details.
+      parameters:
+        - name: limit
+          in: query
+          description: The amount of movies returned in JSON.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 50
+        - name: page
+          in: query
+          description: The page number of movies.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        '200':
+          description: Successful get of movie details.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    imdbID:
+                      type: string
+                      example: tt0076759
+                    title:
+                      type: string
+                      example: Star Wars
+                    genres:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                    releaseDate:
+                      type: string
+                      example: 1977-05-25
+                    budget:
+                      type: string
+                      example: $4000
+        default:
+          description: unexpected error
+
+  /movieDetails/{id}:
+    get:
+      description: Gets movie details for one movie along with average rating.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Movie ID that the user wants.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful get of a movies details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imdbID:
+                    type: string
+                    example: tt0076759
+                  title:
+                    type: string
+                    example: Star Wars
+                  overview:
+                    type: string
+                    example: Princess Leia is captured and held hostage by the evil Imperial forces in their effort to
+                      take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together
+                      with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace
+                      and justice in the Empire.
+                  releaseDate:
+                    type: string
+                    example: 1977-05-25
+                  budget:
+                    type: string
+                    example: $4000000
+                  runtime:
+                    type: integer
+                    example: 42
+                  genres:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                  language:
+                    type: string
+                    nullable: true
+                    example: null
+                  productionCompanies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        id:
+                          type: integer
+        default:
+          description: unexpected error
+
+  /moviesByYear/{year}:
+    get:
+      description: Get all movie details from movies the year the user inputs.
+      operationId: moviesByYear
+      parameters:
+        - name: limit
+          in: query
+          description: The amount of movies returned in JSON.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 50
+        - name: page
+          in: query
+          description: The page number of movies.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: year
+          in: path
+          description: year the user wants to search for.
+          required: true
+          schema:
+            type: integer
+            minimum: 1900
+      responses:
+        '200':
+          description: Sucessful year request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    imdbID:
+                      type: string
+                      example: tt0094675
+                    title:
+                      type: string
+                      example: Avatar
+                    genres:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                    releaseDate:
+                      type: string
+                      example: 1988-10-21
+                    budget:
+                      type: string
+                      example: $42
+                default:
+                  description: unexpected error
+
+  /movieGenre/{genre}:
+    get:
+      description: Get all movie details from movies with a genre pciked by the user.
+      operationId: moviesByGenre
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 50
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: genre
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucessful genre request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    imdbID:
+                      type: string
+                      example: tt0094675
+                    title:
+                      type: string
+                      example: Avatar
+                    genres:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                    releaseDate:
+                      type: string
+                      example: 1988-10-21
+                    budget:
+                      type: string
+                      example: $2000
+                default:
+                  description: unexpected error
